@@ -1,0 +1,47 @@
+[
+    {
+        "_id": "63044d17071959ac3d776be7",
+        "enname": "Cirrhinus molitorella",
+        "zhname": "鲮魚",
+        "endescription": "Due to low cost of production, the fish is mainly consumed by the poor and locally consumed; it is mostly sold live and eaten fresh, but can be dried and salted. Increase of hunting has threatened the number of mud carp.",
+        "zhdescription": "大型食用魚，且有經濟價值。適合煎、烤、炸、紅燒及糖醋等各種烹飪方法食用（如鯪魚球、煎釀鯪魚等），已商業化養殖。",
+        "kindom": "Animalia",
+        "phylum": "Chordata",
+        "class": "Actinopterygii",
+        "order": "Cypriniformes",
+        "family": "Cyprinidae",
+        "subfamily": "Labeoninae",
+        "genus": "Cirrhinus",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/LabeoCalbasuDay.jpg",
+        "environment": {
+            "minTemp": 15,
+            "maxTemp": 30,
+            "minO2": 0.24,
+            "minpH": 3,
+            "maxpH": 7,
+            "minDepth": 1.2,
+            "maxDepth": 1.5
+        }
+    },
+    {
+        "_id": "63044ea5071959ac3d776be8",
+        "enname": "Scortum barcoo",
+        "zhname": "寶石鱸",
+        "endescription": "This fish has a sturdy body and a small head. The body is brownish with darker blotches and darker fins.[3] The fish reaches a maximum length of about 50 cm",
+        "zhdescription": "為輻鰭魚綱鱸形目鱸亞目鯻科的其中一種，由於其體側很多大小不等黑色閃亮的橢圓形斑，宛如鑲嵌在魚身體表的黑寶石，故稱之為寶石魚。是原產澳洲的食用淡水魚，目前為昆士蘭地區六大重要淡水魚類之一，具有成長快、雜食性及耐低溶氧等特點，種魚性成熟需要4年。因牠們具有很强的环境适应力和高度的抗病能力，故被引進世界各地，成為享负盛名的食用魚。",
+        "kindom": "Animalia",
+        "phylum": "Chordata",
+        "class": "Actinopterygii",
+        "order": "Perciformes",
+        "family": "Terapontidae",
+        "genus": "Scortum",
+        "url": "https://www.fmo.org.hk/uploads/yj1.jpg",
+        "environment": {
+            "minTemp": 10,
+            "maxTemp": 38,
+            "minO2": 2.5,
+            "minpH": 7.5,
+            "maxpH": 8
+        }
+    }
+]
