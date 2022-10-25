@@ -5,10 +5,12 @@ import Grid from '@mui/material/Grid'
 import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
 import CardHeader from '@mui/material/CardHeader'
 import Card from '@mui/material/Card'
+import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 // ** Styled Component Import
 import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
 // ** Demo Components Imports
+import ORP_TDS from 'src/views/Employee/dashboard/ORP_TDS'
 import DailyQty from 'src/views/Employee/dashboard/DailyQty'
 import NumPond from 'src/views/Employee/dashboard/NumPond'
 import MonthlyQty from 'src/views/Employee/dashboard/MonthlyQty'
@@ -44,31 +46,57 @@ const EmployeeIndex = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card>
-          <CardHeader title='Warning - No problem found' titleTypographyProps={{ variant: 'h6' }} />
+          <CardHeader title='Warning - No critical problem found' titleTypographyProps={{ variant: 'h6' }} />
           <Banner />
           </Card> 
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={6}>
           <CardStatisticsVerticalComponent
-                stats=''
-                icon=''
+                stats='---'
+                icon={<CloudQueueIcon/>}
                 color='success'
                 trendNumber=''
                 title='Weather'
                 subtitle=''
               />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={6}>
         <CardStatisticsVerticalComponent
-                stats=''
+                stats='FS-001-02'
                 icon={<ChartAreaspline />}
-                color='success'
+                color='info'
                 trendNumber=''
-                title='Number of Ponds'
+                title='Pond'
                 subtitle=''
               />
         </Grid>
-        <Grid item xs={12} md={3}>
+      
+        <Grid item xs={12} md={12}>
+          <DailyQty />
+        </Grid>
+        <Grid item xs={12} md={12}>
+          <ORP_TDS />
+        </Grid>
+        
+        
+      </Grid>
+    </ApexChartWrapper>
+  )
+}
+/*  
+ <Grid item xs={12} md={12}>
+        <MonthlyQty />
+        </Grid>
+ <Grid item xs={12} md={12}>
+          <NumPond />
+        </Grid>
+  <Grid item xs={12} md={12}>
+          <Card>
+          <CardHeader title='Resources-Recent' titleTypographyProps={{ variant: 'h6' }} />
+          <ResourcesRecent />
+          </Card> 
+        </Grid>  
+  <Grid item xs={12} md={3}>
         <CardStatisticsVerticalComponent
                 stats=''
                 icon={<ChartAreasplineVariant />}
@@ -88,24 +116,5 @@ const EmployeeIndex = () => {
                 subtitle=''
               />
         </Grid>
-        <Grid item xs={12} md={12}>
-          <Card>
-          <CardHeader title='Resources-Recent' titleTypographyProps={{ variant: 'h6' }} />
-          <ResourcesRecent />
-          </Card> 
-        </Grid>      
-        <Grid item xs={12} md={12}>
-          <NumPond />
-        </Grid>
-        <Grid item xs={12} md={12}>
-          <DailyQty />
-        </Grid>
-        <Grid item xs={12} md={12}>
-        <MonthlyQty />
-        </Grid>
-      </Grid>
-    </ApexChartWrapper>
-  )
-}
-
+*/ 
 export default EmployeeIndex

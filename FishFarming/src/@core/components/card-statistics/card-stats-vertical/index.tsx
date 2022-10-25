@@ -27,7 +27,8 @@ const CardStatsVertical = (props: CardStatsVerticalProps) => {
             <DotsVertical />
           </IconButton>
         </Box>
-        <Typography sx={{ fontWeight: 600, fontSize: '0.875rem' }}>{title}</Typography>
+        <Typography sx={{ fontWeight: 600, fontSize: '1.5rem' }}>{title}</Typography>
+
         <Box sx={{ marginTop: 1.5, display: 'flex', flexWrap: 'wrap', marginBottom: 1.5, alignItems: 'flex-start' }}>
           <Typography variant='h6' sx={{ mr: 2 }}>
             {stats}

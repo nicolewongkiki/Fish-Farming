@@ -17,37 +17,12 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
 const NumPond = () => {
   // ** Hook
-  var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-  };
+ 
   useEffect(() => {
 
   });
   var APIDATA = [37, 57, 45, 75, 57, 40, 65] ;
-  //var APIDATA = getData() ;
-  //const [APIData, setAPIData] = useState(data);
-  //console.log("Dataaaaa",data);
-  async function getData(){
-    var obj ;
-    await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET',redirect: 'follow' })
-    .then(response => response.text())
-    .then((result)=>{
-      console.log(result);
-      obj = JSON.parse(result);
-      //const [APIData, setAPIData] = useState(obj);
-      console.log(obj.length);
 
-      console.log(obj[obj.length-1].timestamp.substring(11, 19));
-      
-    })
-    .catch(error => console.log('error', error));
-    return obj
-  }
-  getData()
-  /*setInterval(()=>{
-    getData()
-  },900000)*/
   
   const theme = useTheme()
   const options: ApexOptions = {

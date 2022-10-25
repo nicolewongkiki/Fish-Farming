@@ -59,7 +59,7 @@ var temp = [Data1.temp, Data2.temp, Data3.temp, Data4.temp, Data5.temp, Data6.te
 var ph = [Data1.ph, Data2.ph, Data3.ph, Data4.ph, Data5.ph, Data6.ph, Data7.ph]
 
 
-const DailyQty = () => {
+const ORP_TDS = () => {
   const Box1Data = [
     {
       name: 'PH',
@@ -168,29 +168,33 @@ const DailyQty = () => {
         {/*<ReactApexcharts type='line' height={205} options={options} series={BoxData} /> */}
         <Grid container spacing={12}>
           <Grid item xs={12} sm={6}>
+
             <Typography variant='h6' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
-              PH
+              ORP
             </Typography>
             <Card sx={{border: 1 , color:'#c5cae9' }}>
               <CardContent>
-                <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
+                <Typography variant='h5' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
+                  N/A
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant='h6' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
+              TDS
+            </Typography>
+            <Card sx={{border: 1 , color:'#c5cae9' }}>
+              <CardContent>
+                <Typography variant='h5' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
+                  N/A
+                </Typography>
               </CardContent>
             </Card>
 
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant='h6' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
-              TEMP
-            </Typography>
-            <Card sx={{border: 1 , color:'#c5cae9' }}  >
-              <CardContent>
-                <ReactApexcharts type='line' height={205} options={options} series={Box2Data} />
-              </CardContent>
-            </Card>
-          </Grid>
         </Grid>
         {/*
-        border: 1px solid rgb(0 0 0) !important
       tickPlacement: 'on',
       labels: { show: false },
       axisTicks: { show: false },
@@ -229,12 +233,10 @@ data: [20, 70, 80, 40, 60, 100, 35] }
           <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
         </Box>
       */}
-        <Button fullWidth variant='contained'>
-          Details
-        </Button>
+
       </CardContent>
     </Card>
   )
 }
 
-export default DailyQty
+export default ORP_TDS
