@@ -20,6 +20,7 @@ import ResourcesRecent from 'src/views/Employee/dashboard/ResourcesRecent'
 import ChartAreaspline from 'mdi-material-ui/ChartAreaspline'
 import ChartAreasplineVariant from 'mdi-material-ui/ChartAreasplineVariant'
 
+
 async function postData(url = '', data = {}) {
   // Default options are marked with *
   const response = await fetch(url, {
@@ -81,7 +82,7 @@ const EmployeeIndex = () => {
         
       </Grid>
     </ApexChartWrapper>
-  )
+  ) 
 }
 /*  
  <Grid item xs={12} md={12}>

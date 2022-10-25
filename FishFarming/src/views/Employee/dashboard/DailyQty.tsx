@@ -24,30 +24,8 @@ import Data5 from 'src/Sample Data 20220801/20220801_010739.json'
 import Data6 from 'src/Sample Data 20220801/20220801_012240.json'
 import Data7 from 'src/Sample Data 20220801/20220801_013741.json'
 import Grid from '@mui/material/Grid'
-var APIDATA = [37, 57, 45, 75, 57, 40, 65];
-//var APIDATA = getData() ;
-//const [APIData, setAPIData] = useState(data);
-//console.log("Dataaaaa",data);
-async function getData() {
-  var obj;
-  await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
-    .then(response => response.text())
-    .then((result) => {
-      console.log(result);
-      obj = JSON.parse(result);
-      //const [APIData, setAPIData] = useState(obj);
-      console.log(obj.length);
 
-      console.log(obj[obj.length - 1].timestamp.substring(11, 19));
 
-    })
-    .catch(error => console.log('error', error));
-  return obj
-}
-getData()
-/*setInterval(()=>{
-  getData()
-},900000)*/
 //array
 var time = [Data1.timestamp.substring(11, 19), Data2.timestamp.substring(11, 19),
 Data3.timestamp.substring(11, 19), Data4.timestamp.substring(11, 19),
@@ -57,32 +35,88 @@ Data7.timestamp.substring(11, 19)];
 var temp = [Data1.temp, Data2.temp, Data3.temp, Data4.temp, Data5.temp, Data6.temp, Data7.temp]
 
 var ph = [Data1.ph, Data2.ph, Data3.ph, Data4.ph, Data5.ph, Data6.ph, Data7.ph]
+var APIDATA = [37, 57, 45, 75, 57, 40, 65];
 
 
 const DailyQty = () => {
+
+  const [lastUpdate, setLastUpdate] = useState(null);
+  const [xCategories, setXCategories] = useState([]);
+  const [xPHData, setXData] = useState([]);
+  const [xTempData, setXTempData] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      var obj = null;
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
+        .then(response => response.text())
+        .then((result) => {
+          console.log(result);
+          obj = JSON.parse(result);
+          //const [APIData, setAPIData] = useState(obj);
+          console.log("obj" + obj);
+          var dumpArray = Object.assign([], obj);
+          console.log(obj[obj.length - 1].timestamp.substring(11, 19));
+          setLastUpdate(dumpArray[dumpArray.length - 1].timestamp.substring(11, 19))
+  
+          console.log(dumpArray);
+          var dumpArray2 = [];
+          var phArray = [];
+          var TempArray = [];
+          dumpArray.forEach(element => {
+            if (dumpArray2.indexOf(element.timestamp.substring(11, 13)) === -1) {
+              console.log();
+            }
+            dumpArray2.push(element.timestamp.substring(11, 16));
+
+            phArray.push(element.ph);
+            TempArray.push(element.temp);
+          });
+          
+          console.log(dumpArray2);
+          console.log(dumpArray2);
+
+          setXCategories(dumpArray2);
+          setXData(phArray);
+          setXTempData(TempArray);
+          //console.log(newArray);
+          //window.localStorage.setItem('lastUpdate', obj[obj.length - 1].timestamp.substring(11, 19))
+          //lastUpdate = obj[obj.length - 1].timestamp.substring(11, 19) ;
+        })
+        .catch(error => console.log('error', error));
+    }
+    getData();
+    
+    // setter
+    //localStorage.setItem('myData', data);
+    // getter
+
+    // remove
+    //localStorage.removeItem('myData');
+    // remove all
+    //localStorage.clear();
+  }, [])
+
+
+
+  /*setInterval(()=>{
+    getData()
+  },900000)*/
+
   const Box1Data = [
     {
       name: 'PH',
-      data: [ph[0], ph[1], ph[2], ph[3], ph[4], ph[5], ph[6]]
+      data: xPHData
     }
   ];
 
   const Box2Data = [
     {
       name: 'TEMP',
-      data: [temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6]]
+      data: xTempData
     }
   ];
-  const BoxData = [
-    {
-      name: 'PH',
-      data: [ph[0], ph[1], ph[2], ph[3], ph[4], ph[5], ph[6]]
-    },
-    {
-      name: 'TEMP',
-      data: [temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6]]
-    }
-  ];
+
 
   // ** Hook
   const theme = useTheme()
@@ -121,7 +155,6 @@ const DailyQty = () => {
       theme.palette.background.default,
       theme.palette.background.default,
       theme.palette.background.default,
-
       theme.palette.background.default,
       theme.palette.background.default
     ],
@@ -140,7 +173,7 @@ const DailyQty = () => {
       title: {
         text: 'Time'
       },
-      categories: [time[0], time[1], time[2], time[3], time[4], time[5], time[6]]
+      categories: xCategories
     },
     yaxis: {
       labels: {
@@ -154,37 +187,41 @@ const DailyQty = () => {
   return (
     <Card>
       <CardHeader
-        title='Current Pond Status'
+        title={"Current Pond Status "}
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
+        subheader={"Last Update : " + lastUpdate}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
           </IconButton>
         }
       />
+
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        {/*<ReactApexcharts type='line' height={205} options={options} series={BoxData} /> */}
+
         <Grid container spacing={12}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <Typography variant='h6' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
               PH
             </Typography>
-            <Card sx={{border: 1 , color:'#c5cae9' }}>
+            <Card sx={{ border: 1, color: '#c5cae9' }}>
               <CardContent>
-                <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
+              {"Last Update : " + lastUpdate}  <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
               </CardContent>
             </Card>
 
           </Grid>
-          <Grid item xs={12} sm={6}>
+        </Grid>
+        <Grid container spacing={12}>
+          <Grid item xs={12} sm={12}>
             <Typography variant='h6' sx={{ marginBottom: 2, textAlign: 'center', fontWeight: 1000 }}>
-              TEMP
+              Temperature
             </Typography>
-            <Card sx={{border: 1 , color:'#c5cae9' }}  >
+            <Card sx={{ border: 1, color: '#c5cae9' }}  >
               <CardContent>
-                <ReactApexcharts type='line' height={205} options={options} series={Box2Data} />
+              {"Last Update : " + lastUpdate}<ReactApexcharts type='line' height={205} options={options} series={Box2Data} />
               </CardContent>
             </Card>
           </Grid>
