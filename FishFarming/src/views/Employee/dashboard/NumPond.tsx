@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
-
+import { useState, useEffect } from "react";
 // ** Icons Imports
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 
@@ -17,8 +17,39 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
 const NumPond = () => {
   // ** Hook
-  const theme = useTheme()
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  useEffect(() => {
 
+  });
+  var APIDATA = [37, 57, 45, 75, 57, 40, 65] ;
+  //var APIDATA = getData() ;
+  //const [APIData, setAPIData] = useState(data);
+  //console.log("Dataaaaa",data);
+  async function getData(){
+    var obj ;
+    await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET',redirect: 'follow' })
+    .then(response => response.text())
+    .then((result)=>{
+      console.log(result);
+      obj = JSON.parse(result);
+      //const [APIData, setAPIData] = useState(obj);
+      console.log(obj.length);
+
+      console.log(obj[obj.length-1].timestamp.substring(11, 19));
+      
+    })
+    .catch(error => console.log('error', error));
+    return obj
+  }
+  getData()
+  /*setInterval(()=>{
+    getData()
+  },900000)*/
+  
+  const theme = useTheme()
   const options: ApexOptions = {
     chart: {
       parentHeightOffset: 0,
@@ -67,9 +98,9 @@ const NumPond = () => {
     xaxis: {
       categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       tickPlacement: 'on',
-      labels: { show: false },
-      axisTicks: { show: false },
-      axisBorder: { show: false }
+      labels: { show: true },
+      axisTicks: { show: true },
+      axisBorder: { show: true }
     },
     yaxis: {
       show: true,
@@ -82,6 +113,7 @@ const NumPond = () => {
   }
 
   return (
+    
     <Card>
       <CardHeader
         title='Number of Pond'
@@ -95,7 +127,7 @@ const NumPond = () => {
         }
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <ReactApexcharts type='line' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
+        <ReactApexcharts type='line' height={205} options={options} series={ [{ data: APIDATA } ]} />
         {/*
         <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
           <Typography variant='h5' sx={{ mr: 4 }}>

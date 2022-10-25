@@ -32,7 +32,7 @@ class Navbar extends React.Component {
                     <div className="nav-button ml-auto">
                         <ul className="nav navbar-nav navbar-right">
                             <li>
-                                <button type="button" className="btn btn-custom navbar-btn btn-rounded waves-effect waves-light"><a href="/Login">Login</a></button>
+                                <button type="button" className="btn btn-custom navbar-btn btn-rounded waves-effect waves-light"><a href="/EmployeeIndex">Login</a></button>
                             </li>
                         </ul>
                     </div>
