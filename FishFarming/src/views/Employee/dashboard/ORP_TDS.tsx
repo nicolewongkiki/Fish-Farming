@@ -43,7 +43,7 @@ var temp = [Data1.temp, Data2.temp, Data3.temp, Data4.temp, Data5.temp, Data6.te
 var ph = [Data1.ph, Data2.ph, Data3.ph, Data4.ph, Data5.ph, Data6.ph, Data7.ph]
 
 
-const ORP_TDS = () => {
+const ORP_TDS = ({currentDate  } : any ) => {
   const Box1Data = [
     {
       name: 'PH',
