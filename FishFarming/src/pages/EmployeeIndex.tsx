@@ -21,13 +21,21 @@ import ResourcesRecent from 'src/views/Employee/dashboard/ResourcesRecent'
 import { useState, useEffect } from "react";
 import ChartAreaspline from 'mdi-material-ui/ChartAreaspline'
 import ChartAreasplineVariant from 'mdi-material-ui/ChartAreasplineVariant'
-
-
+import * as dayjs from 'dayjs'
+import 'dayjs/locale/zh-hk' // import locale
 
 const EmployeeIndex = () => {
   const [weatherData, setWeatherData] = useState<any>({temp:"23",weather:"Sunny"});
+  const [currentDate, setCurrentDate] = useState<any>(null);
+
 
   useEffect(() => {
+    let date = new Date();
+    console.log(date);
+    var now = dayjs(Date.now()).format('YYYYMMDD')
+    console.log("now",now);
+    setCurrentDate(now);
+
     async function getData() {
       var obj = null;
       var key = "14986c24d97b00cb6f239a24f4f42044" ;
@@ -50,7 +58,7 @@ const EmployeeIndex = () => {
         <Grid item xs={12} md={12}>
           <Card>
             <CardHeader title='Warning - No critical problem found' titleTypographyProps={{ variant: 'h6' }} />
-            <Banner />
+            {/* <Banner /> */}
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -75,13 +83,13 @@ const EmployeeIndex = () => {
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <PH />
+          <PH currentDate={currentDate} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Temp />
+          <Temp currentDate={currentDate}/>
         </Grid>
         <Grid item xs={12} md={12}>
-          <ORP_TDS />
+          <ORP_TDS currentDate={currentDate}/>
         </Grid>
 
 

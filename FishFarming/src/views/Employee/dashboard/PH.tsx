@@ -22,8 +22,8 @@ import Grid from '@mui/material/Grid'
 
 //array
 
-const PH = () => {
-
+const PH = ({currentDate  } : any ) => {
+  console.log("currentDate",currentDate);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [xCategories, setXCategories] = useState<any[]>([]);
   const [xPHData, setXData] = useState<any[]>([]);
@@ -31,7 +31,7 @@ const PH = () => {
   useEffect(() => {
     async function getData() {
       var obj = null;
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/"+currentDate, { method: 'GET', redirect: 'follow' })
         .then(response => response.text())
         .then((result) => {
           console.log(result);
