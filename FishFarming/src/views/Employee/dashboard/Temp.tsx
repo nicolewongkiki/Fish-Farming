@@ -23,7 +23,7 @@ import Grid from '@mui/material/Grid'
 //array
 const Temp = ({currentDate  } : any ) => {
   console.log("currentDate",currentDate);
-  const [lastUpdate, setLastUpdate] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState("read data error");
   const [xCategories, setXCategories] = useState<any[]>([]);
   const [xTempData, setXTempData] = useState<any[]>([]);
 
@@ -42,7 +42,7 @@ const Temp = ({currentDate  } : any ) => {
       return hour + ":" + minutes;
     }
     async function getData() {
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221102", { method: 'GET', redirect: 'follow' })
         .then(response => response.json())
         .then((result) => {
           console.log("TempResult", result);
@@ -172,7 +172,7 @@ const Temp = ({currentDate  } : any ) => {
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
-        subheader={"Last Update : " + lastUpdate}
+        subheader= {xCategories.length ==0 ? "" : "Last Update : " + lastUpdate}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
@@ -189,7 +189,10 @@ const Temp = ({currentDate  } : any ) => {
             </Typography>
             <Card sx={{ border: 1, color: '#c5cae9' }}  >
               <CardContent>
-              {"Last Update : " + lastUpdate}<ReactApexcharts type='line' height={205} options={options} series={Box2Data} />
+              {"Last Update : " + lastUpdate}
+
+              {xCategories.length ==0 ? "" :  <ReactApexcharts type='line' height={205} options={options} series={Box2Data} /> }
+
               </CardContent>
             </Card>
           </Grid>

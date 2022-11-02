@@ -21,7 +21,7 @@ import Grid from '@mui/material/Grid'
 
 const PH = (APIDATA: any) => {
   console.log("APIDATA", APIDATA);
-  const [lastUpdate, setLastUpdate] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState("read data error");
   const [xCategories, setXCategories] = useState<any[]>([]);
   const [yCategories, setYCategories] = useState<any[]>([]);
 
@@ -73,14 +73,14 @@ const PH = (APIDATA: any) => {
     }*/
 
     async function getData() {
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221102", { method: 'GET', redirect: 'follow' })
         .then(response => response.json())
         .then((result) => {
           console.log("data" + result);
 
           var dumpArray = Object.assign([], result);
           if (dumpArray.length == 0) {
-
+            setXCategories([]);
           } else {
             setLastUpdate(convertTime(dumpArray[dumpArray.length - 1].timestamp));
             console.log(dumpArray);
@@ -198,11 +198,11 @@ const PH = (APIDATA: any) => {
   return (
     <Card>
       <CardHeader
-        title={"Current Pond Status " }
+        title={"Current Pond Status "}
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
-        subheader={"Last Update : " + lastUpdate}
+        subheader= {xCategories.length ==0 ? "" : "Last Update : " + lastUpdate}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
             <DotsVertical />
@@ -219,7 +219,10 @@ const PH = (APIDATA: any) => {
             </Typography>
             <Card sx={{ border: 1, color: '#c5cae9' }}>
               <CardContent>
-                {"Last Update : " + lastUpdate}  <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
+                
+              {"Last Update : " + lastUpdate}
+                {xCategories.length ==0 ? "" :  <ReactApexcharts type='line' height={205} options={options} series={Box1Data} /> }
+                
               </CardContent>
             </Card>
 
