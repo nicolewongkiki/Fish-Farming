@@ -34,7 +34,7 @@ const EmployeeIndex = () => {
     console.log(date);
     var now = dayjs(Date.now()).format('YYYYMMDD')
     console.log("now", now);
-    setCurrentDate("20221025");
+    setCurrentDate(now);
 
 
     async function getData() {
