@@ -28,40 +28,52 @@ const Temp = ({currentDate  } : any ) => {
   const [xTempData, setXTempData] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log();
+    function convertTime(t: any) {
+      let localtime = new Date(t);
+      localtime.setHours(localtime.getHours() - 8);
+      let hour = localtime.getHours();
+      if (hour < 10) {
+        hour = "0" + hour;
+      }
+      let minutes = localtime.getMinutes();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return hour + ":" + minutes;
+    }
     async function getData() {
-      try{
-
-      }catch(e){}
-      var obj = null;
       await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
-        .then(response => response.text())
+        .then(response => response.json())
         .then((result) => {
-          console.log(result);
-          obj = JSON.parse(result);
-          //const [APIData, setAPIData] = useState(obj);
-          console.log("obj" + obj);
-          var dumpArray = Object.assign([], obj);
-          console.log(obj[obj.length - 1].timestamp.substring(11, 19));
-          setLastUpdate(dumpArray[dumpArray.length - 1].timestamp.substring(11, 19))
-  
-          console.log(dumpArray);
-          var dumpArray2: any[] = [] ;
-          var TempArray : any[]= [];
-          dumpArray.forEach((element:any) => {
-            if (dumpArray2.indexOf(element.timestamp.substring(11, 13)) === -1) {
-              console.log();
-            }
-            dumpArray2.push(element.timestamp.substring(11, 16));
-            TempArray.push(element.temp);
-          });
-          
-          console.log(dumpArray2);
-          console.log(dumpArray2);
+          console.log("TempResult", result);
 
-          setXCategories(dumpArray2);
-         
-          setXTempData(TempArray);
+          var dumpArray = Object.assign([], result);
+          if (dumpArray.length == 0) {
+
+          } else {
+            setLastUpdate(convertTime(dumpArray[dumpArray.length - 1].timestamp));
+            console.log(dumpArray);
+            let dumpArray2: any[] = [];
+            let phArray: any[] = [];
+
+            if (dumpArray.length > 12) {
+              dumpArray = dumpArray.reverse();
+              for (var i = 0; i < 12; i++) {
+                dumpArray2.push(convertTime(dumpArray[i].timestamp));
+                phArray.push(dumpArray[i].temp);
+              }
+            } else {
+              for (var i = 0; i < 12; i++) {
+                dumpArray2.push(convertTime(dumpArray[i].timestamp));
+                phArray.push(dumpArray[i].temp);
+              }
+            }
+            dumpArray2 = dumpArray2.reverse();
+            console.log(dumpArray2);
+            console.log(dumpArray2);
+            setXCategories(dumpArray2);
+            setXTempData(phArray);
+          }
 
         })
         .catch(error => console.log('error', error));

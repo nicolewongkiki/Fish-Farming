@@ -19,54 +19,103 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
 import Grid from '@mui/material/Grid'
 
-
-//array
-
-const PH = ({currentDate  } : any ) => {
-  console.log("currentDate",currentDate);
+const PH = (APIDATA: any) => {
+  console.log("APIDATA", APIDATA);
   const [lastUpdate, setLastUpdate] = useState(null);
   const [xCategories, setXCategories] = useState<any[]>([]);
+  const [yCategories, setYCategories] = useState<any[]>([]);
+
   const [xPHData, setXData] = useState<any[]>([]);
 
   useEffect(() => {
-    async function getData() {
-      var obj = null;
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
-        .then(response => response.text())
-        .then((result) => {
-          console.log(result);
-          obj = JSON.parse(result);
-          //const [APIData, setAPIData] = useState(obj);
-          console.log("obj" + obj);
-          var dumpArray = Object.assign([], obj);
-          console.log(obj[obj.length - 1].timestamp.substring(11, 19));
-          setLastUpdate(dumpArray[dumpArray.length - 1].timestamp.substring(11, 19))
-  
-          console.log(dumpArray);
-          let dumpArray2 :any[] = [];
-          let phArray :any[]= [];
-          dumpArray.forEach((element : any) => {
-            if (dumpArray2.indexOf(element.timestamp.substring(11, 13)) === -1) {
-              console.log();
-            }
-            dumpArray2.push(element.timestamp.substring(11, 16));
-            phArray.push(element.ph);
-          });
-          
-          console.log(dumpArray2);
-          console.log(dumpArray2);
+    function convertTime(t: any) {
+      let localtime = new Date(t);
+      localtime.setHours(localtime.getHours() - 8);
+      let hour = localtime.getHours();
+      if (hour < 10) {
+        hour = "0" + hour;
+      }
+      let minutes = localtime.getMinutes();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      return hour + ":" + minutes;
+    }
 
-          setXCategories(dumpArray2);
-          setXData(phArray);
+    /*function setData() {
+      var dumpArray = ddd.APIDATA;
+      console.log("DUM",dumpArray);
+      setLastUpdate(convertTime(dumpArray[dumpArray.length - 1].timestamp));
+
+      console.log(dumpArray);
+      let dumpArray2: any[] = [];
+      let phArray: any[] = [];
+
+      if (dumpArray.length > 12) {
+
+        dumpArray = dumpArray.reverse();
+        for (var i = 0; i < 12; i++) {
+          dumpArray2.push(convertTime(dumpArray[i].timestamp));
+          phArray.push(dumpArray[i].ph);
+        }
+      } else {
+        for (var i = 0; i < 12; i++) {
+          dumpArray2.push(convertTime(dumpArray[i].timestamp));
+          phArray.push(dumpArray[i].ph);
+        }
+      }
+      dumpArray2 = dumpArray2.reverse();
+      console.log(dumpArray2);
+      console.log(dumpArray2);
+      setYCategories([1, 2, 3, 4, 5, 6, 7]);
+      setXCategories(dumpArray2);
+      setXData(phArray);
+    }*/
+
+    async function getData() {
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
+        .then(response => response.json())
+        .then((result) => {
+          console.log("data" + result);
+
+          var dumpArray = Object.assign([], result);
+          if (dumpArray.length == 0) {
+
+          } else {
+            setLastUpdate(convertTime(dumpArray[dumpArray.length - 1].timestamp));
+            console.log(dumpArray);
+            let dumpArray2: any[] = [];
+            let phArray: any[] = [];
+
+            if (dumpArray.length > 12) {
+              dumpArray = dumpArray.reverse();
+              for (var i = 0; i < 12; i++) {
+                dumpArray2.push(convertTime(dumpArray[i].timestamp));
+                phArray.push(dumpArray[i].ph);
+              }
+            } else {
+              for (var i = 0; i < 12; i++) {
+                dumpArray2.push(convertTime(dumpArray[i].timestamp));
+                phArray.push(dumpArray[i].ph);
+              }
+            }
+            dumpArray2 = dumpArray2.reverse();
+            console.log(dumpArray2);
+            console.log(dumpArray2);
+            setYCategories([1, 2, 3, 4, 5, 6, 7]);
+            setXCategories(dumpArray2);
+            setXData(phArray);
+          }
+
         })
         .catch(error => console.log('error', error));
     }
     getData();
-    setInterval(()=>{
-      getData();
-    },900000)
-    
-  }, [])
+    setInterval(() => {
+      //getData();
+    }, 900000)
+
+  }, [APIDATA])
   const Box1Data = [
     {
       name: 'PH',
@@ -92,6 +141,7 @@ const PH = ({currentDate  } : any ) => {
       }
     },
     stroke: {
+      curve: 'smooth',
       width: 2,
       colors: [theme.palette.primary.main]
     },
@@ -132,9 +182,14 @@ const PH = ({currentDate  } : any ) => {
       categories: xCategories
     },
     yaxis: {
-      labels: {
-        offsetX: -17
+      title: {
+        text: 'PH'
       },
+      labels: {
+        offsetX: -20
+      },
+      min: 0,
+      max: 7,
       forceNiceScale: true
     }
   }
@@ -143,7 +198,7 @@ const PH = ({currentDate  } : any ) => {
   return (
     <Card>
       <CardHeader
-        title={"Current Pond Status "}
+        title={"Current Pond Status " }
         titleTypographyProps={{
           sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
         }}
@@ -164,13 +219,13 @@ const PH = ({currentDate  } : any ) => {
             </Typography>
             <Card sx={{ border: 1, color: '#c5cae9' }}>
               <CardContent>
-              {"Last Update : " + lastUpdate}  <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
+                {"Last Update : " + lastUpdate}  <ReactApexcharts type='line' height={205} options={options} series={Box1Data} />
               </CardContent>
             </Card>
 
           </Grid>
         </Grid>
-   
+
         {/*
         border: 1px solid rgb(0 0 0) !important
       tickPlacement: 'on',

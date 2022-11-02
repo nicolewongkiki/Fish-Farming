@@ -25,31 +25,38 @@ import * as dayjs from 'dayjs'
 import 'dayjs/locale/zh-hk' // import locale
 
 const EmployeeIndex = () => {
-  const [weatherData, setWeatherData] = useState<any>({temp:"23",weather:"Sunny"});
+  const [weatherData, setWeatherData] = useState<any>({ temp: "23", weather: "Sunny" });
   const [currentDate, setCurrentDate] = useState<any>(null);
-
+  const [APIDATA, setAPIDATA] = useState<any>();
 
   useEffect(() => {
     let date = new Date();
     console.log(date);
     var now = dayjs(Date.now()).format('YYYYMMDD')
-    console.log("now",now);
+    console.log("now", now);
     setCurrentDate(now);
 
+
     async function getData() {
-      var obj = null;
-      var key = "14986c24d97b00cb6f239a24f4f42044" ;
-      await fetch("https://api.openweathermap.org/data/2.5/weather?lat=22.2699911&lon=114.2414331&units=metric&appid="+key, { method: 'GET', redirect: 'follow' })
+
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221025", { method: 'GET', redirect: 'follow' })
         .then(response => response.json())
         .then((result) => {
-          console.log("result",result);
-          console.log("result",result.main.temp);
-          var current  = {temp:result.main.temp, weather: result.weather[0].main}
-          setWeatherData(current);
+          console.log("dataEMP" + result);
+
+          var dumpArray = Object.assign([], result);
+          if (dumpArray.length == 0) {
+            setAPIDATA(dumpArray);
+
+          } else {
+
+            setAPIDATA(dumpArray);
+
+          }
         })
-        .catch(error => console.log('error', error));
     }
-    getData();
+
+    //getData();
   }, [])
 
   return (
@@ -63,7 +70,7 @@ const EmployeeIndex = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <CardStatisticsVerticalComponent
-            stats={weatherData.temp + "°C" }
+            stats={weatherData.temp + "°C"}
             icon={<CloudQueueIcon />}
             color='success'
             trendNumber=''
@@ -83,13 +90,13 @@ const EmployeeIndex = () => {
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <PH currentDate={currentDate} />
+          <PH APIDATA={APIDATA} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Temp currentDate={currentDate}/>
+          <Temp currentDate={currentDate} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <ORP_TDS currentDate={currentDate}/>
+          <ORP_TDS currentDate={currentDate} />
         </Grid>
 
 
