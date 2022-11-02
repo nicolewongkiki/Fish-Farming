@@ -19,8 +19,7 @@ import ReactApexcharts from 'src/@core/components/react-apexcharts'
 
 import Grid from '@mui/material/Grid'
 
-const PH = (APIDATA: any) => {
-  console.log("APIDATA", APIDATA);
+const PH = (currentDate: any) => {
   const [lastUpdate, setLastUpdate] = useState("read data error");
   const [xCategories, setXCategories] = useState<any[]>([]);
   const [yCategories, setYCategories] = useState<any[]>([]);
@@ -73,7 +72,7 @@ const PH = (APIDATA: any) => {
     }*/
 
     async function getData() {
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221102", { method: 'GET', redirect: 'follow' })
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/"+currentDate.currentDate, { method: 'GET', redirect: 'follow' })
         .then(response => response.json())
         .then((result) => {
           console.log("data" + result);
@@ -115,7 +114,7 @@ const PH = (APIDATA: any) => {
       //getData();
     }, 900000)
 
-  }, [APIDATA])
+  }, [currentDate])
   const Box1Data = [
     {
       name: 'PH',

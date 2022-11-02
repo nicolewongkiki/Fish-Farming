@@ -34,7 +34,7 @@ const EmployeeIndex = () => {
     console.log(date);
     var now = dayjs(Date.now()).format('YYYYMMDD')
     console.log("now", now);
-    setCurrentDate(now);
+    setCurrentDate("20221025");
 
 
     async function getData() {
@@ -90,7 +90,7 @@ const EmployeeIndex = () => {
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <PH APIDATA={APIDATA} />
+          <PH currentDate={currentDate} />
         </Grid>
         <Grid item xs={12} md={12}>
           <Temp currentDate={currentDate} />

@@ -21,7 +21,7 @@ import Grid from '@mui/material/Grid'
 
 
 //array
-const Temp = ({currentDate  } : any ) => {
+const Temp = (currentDate   : any ) => {
   console.log("currentDate",currentDate);
   const [lastUpdate, setLastUpdate] = useState("read data error");
   const [xCategories, setXCategories] = useState<any[]>([]);
@@ -42,7 +42,7 @@ const Temp = ({currentDate  } : any ) => {
       return hour + ":" + minutes;
     }
     async function getData() {
-      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/20221102", { method: 'GET', redirect: 'follow' })
+      await fetch("http://aquamon.starsknights.com:18888/v1/pond/FS-001-02/"+currentDate.currentDate, { method: 'GET', redirect: 'follow' })
         .then(response => response.json())
         .then((result) => {
           console.log("TempResult", result);
@@ -83,7 +83,7 @@ const Temp = ({currentDate  } : any ) => {
       getData();
     },900000)
     
-  }, [])
+  }, [currentDate])
 
 
 
