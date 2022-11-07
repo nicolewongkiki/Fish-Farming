@@ -94,6 +94,7 @@ const PH = (currentDate: any) => {
                 phArray.push(dumpArray[i].ph);
               }
             } else {
+              dumpArray = dumpArray.reverse();
               for (var i = 0; i < dumpArray.length; i++) {
                 dumpArray2.push(convertTime(dumpArray[i].timestamp));
                 phArray.push(dumpArray[i].ph);

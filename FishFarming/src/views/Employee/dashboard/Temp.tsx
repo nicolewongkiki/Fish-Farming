@@ -63,6 +63,7 @@ const Temp = (currentDate   : any ) => {
                 phArray.push(dumpArray[i].temp);
               }
             } else {
+              dumpArray = dumpArray.reverse();
               for (var i = 0; i < dumpArray.length; i++) {
                 dumpArray2.push(convertTime(dumpArray[i].timestamp));
                 phArray.push(dumpArray[i].temp);
