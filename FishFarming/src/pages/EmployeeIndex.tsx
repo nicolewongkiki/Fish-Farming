@@ -13,6 +13,7 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 import ORP_TDS from 'src/views/Employee/dashboard/ORP_TDS'
 import PH from 'src/views/Employee/dashboard/PH'
 import Temp from 'src/views/Employee/dashboard/Temp'
+import PH_Temp from 'src/views/Employee/dashboard/PH_Temp'
 
 import NumPond from 'src/views/Employee/dashboard/NumPond'
 import MonthlyQty from 'src/views/Employee/dashboard/MonthlyQty'
@@ -90,11 +91,11 @@ const EmployeeIndex = () => {
         </Grid>
 
         <Grid item xs={12} md={12}>
-          <PH currentDate={currentDate} />
+          <PH_Temp currentDate={currentDate} />
         </Grid>
-        <Grid item xs={12} md={12}>
+        {/* <Grid item xs={12} md={12}>
           <Temp currentDate={currentDate} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={12}>
           <ORP_TDS currentDate={currentDate} />
         </Grid>
