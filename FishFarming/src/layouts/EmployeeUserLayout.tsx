@@ -41,17 +41,18 @@ const EmployeeUserLayout = ({ children }: Props) => {
   const UpgradeToProImg = () => {
     return (
       
-      <Box sx={{ mx: 'auto' }}>
-        <h1>Howdy,</h1>
-        <h1>Mr Chan!</h1>
-        <a
-          target='_current'
-          rel='noreferrer'
-          href='/EmployeeFeedback'
-        >
-          <img width={150} alt='upgrade to premium' src={`/images/misc/upgrade-banner-${settings.mode}.png`} />
-        </a>
-      </Box>
+      // <Box sx={{ mx: 'auto' }}>
+      //   <h1>Howdy,</h1>
+      //   <h1>Mr Chan!</h1>
+      //   <a
+      //     target='_current'
+      //     rel='noreferrer'
+      //     href='/EmployeeFeedback'
+      //   >
+      //     <img width={150} alt='upgrade to premium' src={`/images/misc/upgrade-banner-${settings.mode}.png`} />
+      //   </a>
+      // </Box>
+       <Box ></Box>
     )
   }
 

@@ -78,6 +78,7 @@ const PH = (currentDate: any) => {
           console.log("data" + result);
 
           var dumpArray = Object.assign([], result);
+          console.log("dumpArray" + dumpArray);
           if (dumpArray.length == 0) {
             setXCategories([]);
           } else {
@@ -93,7 +94,7 @@ const PH = (currentDate: any) => {
                 phArray.push(dumpArray[i].ph);
               }
             } else {
-              for (var i = 0; i < 12; i++) {
+              for (var i = 0; i < dumpArray.length; i++) {
                 dumpArray2.push(convertTime(dumpArray[i].timestamp));
                 phArray.push(dumpArray[i].ph);
               }
@@ -268,9 +269,7 @@ data: [20, 70, 80, 40, 60, 100, 35] }
           <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
         </Box>
       */}
-        <Button fullWidth variant='contained'>
-          Details
-        </Button>
+
       </CardContent>
     </Card>
   )
